@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.amber.shade600,
         centerTitle: true,
@@ -71,7 +71,49 @@ class _HomePageState extends State<HomePage> {
                                 labelText: 'BRL',
                                 labelStyle: TextStyle(
                                   color: Colors.amber.shade400,
-                                )))
+                                ))),
+                        TextField(
+                          controller: null,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.amber)),
+                            labelText: 'USD',
+                            labelStyle: TextStyle(
+                              color: Colors.amber.shade400,
+                            ),
+                          ),
+                        ),
+                        TextField(
+                          controller: null,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.amber)),
+                            labelText: 'ARS',
+                            labelStyle: TextStyle(
+                              color: Colors.amber.shade400,
+                            ),
+                          ),
+                        ),
+                        TextField(
+                          controller: null,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.amber)),
+                            labelText: 'BTC',
+                            labelStyle: TextStyle(
+                              color: Colors.amber.shade400,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
