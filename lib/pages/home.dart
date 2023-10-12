@@ -2,6 +2,8 @@ import 'package:currency/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:currency/constants.dart';
 
+import '../components/textfields.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -11,10 +13,89 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ApiClient apiClient = ApiClient();
-  double? usd;
-  double? euro;
-  double? ars;
-  double? btc;
+
+  late double usd;
+  late double eur;
+  late double ars;
+  late double btc;
+
+  var controllerBRL = TextEditingController();
+  var controllerUSD = TextEditingController();
+  var controllerEUR = TextEditingController();
+  var controllerARS = TextEditingController();
+  var controllerBTC = TextEditingController();
+
+  void inputBRLChanged(String text) {
+    if (text.isEmpty || controllerBRL.text.isEmpty) {
+      _clearAll();
+      return;
+    }
+    double real = double.parse(text);
+    controllerUSD.text = (real / usd).toStringAsFixed(2);
+    controllerEUR.text = (real / eur).toStringAsFixed(2);
+    controllerARS.text = (real / ars).toStringAsFixed(2);
+    controllerBTC.text = (real / btc).toStringAsFixed(8);
+  }
+
+  void inputUSDChanged(String text) {
+    if (text.isEmpty) {
+      _clearAll();
+      return;
+    }
+    double dolar = double.parse(text);
+    double real = (dolar * usd);
+    controllerBRL.text = real.toStringAsFixed(2);
+    controllerEUR.text = (real / eur).toStringAsFixed(2);
+    controllerARS.text = (real / ars).toStringAsFixed(2);
+    controllerBTC.text = (real / btc).toStringAsFixed(8);
+  }
+
+  void inputEURChanged(String text) {
+    if (text.isEmpty) {
+      _clearAll();
+      return;
+    }
+    double euro = double.parse(text);
+    double real = (euro * eur);
+    controllerBRL.text = real.toStringAsFixed(2);
+    controllerUSD.text = (real / usd).toStringAsFixed(2);
+    controllerARS.text = (real / ars).toStringAsFixed(2);
+    controllerBTC.text = (real / btc).toStringAsFixed(8);
+  }
+
+  void inputARSChanged(String text) {
+    if (text.isEmpty) {
+      _clearAll();
+      return;
+    }
+    double peso = double.parse(text);
+    double real = (peso * ars);
+    controllerBRL.text = real.toStringAsFixed(2);
+    controllerEUR.text = (real / eur).toStringAsFixed(2);
+    controllerUSD.text = (real / usd).toStringAsFixed(2);
+    controllerBTC.text = (real / btc).toStringAsFixed(8);
+  }
+
+  void inputBTCChanged(String text) {
+    if (text.isEmpty) {
+      _clearAll();
+      return;
+    }
+    double bitcoin = double.parse(text);
+    double real = (bitcoin * btc);
+    controllerBRL.text = real.toStringAsFixed(2);
+    controllerEUR.text = (real / eur).toStringAsFixed(2);
+    controllerARS.text = (real / ars).toStringAsFixed(2);
+    controllerUSD.text = (real / usd).toStringAsFixed(2);
+  }
+
+  void _clearAll() {
+    controllerBRL.clear();
+    controllerARS.clear();
+    controllerEUR.clear();
+    controllerBTC.clear();
+    controllerUSD.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                           )));
                 }
                 usd = snapshot.data?['results']['currencies']['USD']['buy'];
-                euro = snapshot.data?['results']['currencies']['EUR']['buy'];
+                eur = snapshot.data?['results']['currencies']['EUR']['buy'];
                 ars = snapshot.data?['results']['currencies']['ARS']['buy'];
                 btc = snapshot.data?['results']['currencies']['BTC']['buy'];
                 return SingleChildScrollView(
@@ -56,63 +137,48 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         const Icon(
                           Icons.monetization_on,
-                          color: Colors.white,
-                          size: 64,
+                          color: Colors.amber,
+                          size: 128,
                         ),
-                        TextField(
-                            controller: null,
-                            keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true,
-                            ),
-                            decoration: InputDecoration(
-                                border: const OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.amber)),
-                                labelText: 'BRL',
-                                labelStyle: TextStyle(
-                                  color: Colors.amber.shade400,
-                                ))),
-                        TextField(
-                          controller: null,
-                          keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true,
-                          ),
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.amber)),
-                            labelText: 'USD',
-                            labelStyle: TextStyle(
-                              color: Colors.amber.shade400,
-                            ),
-                          ),
+                        const Divider(),
+                        CurrencyTextField(
+                          controller: controllerBRL,
+                          actionChange: inputBRLChanged,
+                          clearFunction: _clearAll,
+                          labelText: 'Real',
+                          prefix: 'R\$',
                         ),
-                        TextField(
-                          controller: null,
-                          keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true,
-                          ),
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.amber)),
-                            labelText: 'ARS',
-                            labelStyle: TextStyle(
-                              color: Colors.amber.shade400,
-                            ),
-                          ),
+                        const Divider(),
+                        CurrencyTextField(
+                          controller: controllerUSD,
+                          actionChange: inputUSDChanged,
+                          clearFunction: _clearAll,
+                          labelText: 'Dolar',
+                          prefix: '\$',
                         ),
-                        TextField(
-                          controller: null,
-                          keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true,
-                          ),
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.amber)),
-                            labelText: 'BTC',
-                            labelStyle: TextStyle(
-                              color: Colors.amber.shade400,
-                            ),
-                          ),
+                        const Divider(),
+                        CurrencyTextField(
+                          controller: controllerEUR,
+                          actionChange: inputEURChanged,
+                          clearFunction: _clearAll,
+                          labelText: 'Euro',
+                          prefix: '€',
+                        ),
+                        const Divider(),
+                        CurrencyTextField(
+                          controller: controllerARS,
+                          actionChange: inputARSChanged,
+                          clearFunction: _clearAll,
+                          labelText: 'Peso',
+                          prefix: 'ARS',
+                        ),
+                        const Divider(),
+                        CurrencyTextField(
+                          controller: controllerBTC,
+                          actionChange: inputBTCChanged,
+                          clearFunction: _clearAll,
+                          labelText: 'Bitcoin',
+                          prefix: '฿',
                         ),
                       ],
                     ),
