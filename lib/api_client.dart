@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 
 class ApiClient {
   final Dio _dio = Dio();
+  final logger = Logger();
 
   Future<Map<String, dynamic>>? get({required String url}) async {
     Map<String, dynamic> responseData = <String, dynamic>{};
@@ -11,10 +13,10 @@ class ApiClient {
       if (response.statusCode == 200) {
         responseData = response.data;
       } else {
-        print('Request failed with status code: ${response.statusCode}');
+        logger.e('Request failed with status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error occurred: $e');
+      logger.e('Error occurred: $e');
     }
     return responseData;
   }
@@ -25,7 +27,7 @@ class ApiClient {
       final Response response = await _dio.post(url, data: data);
       return response.data as Map<String, dynamic>;
     } catch (e) {
-      print('Error occurred: $e');
+      logger.e('Error occurred: $e');
       return null;
     }
   }
