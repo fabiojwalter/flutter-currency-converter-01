@@ -9,7 +9,7 @@ class ApiClient {
     Map<String, dynamic> responseData = <String, dynamic>{};
     try {
       _dio.options.headers['Access-Control-Allow-Origin'] =
-          'https://aaurus-converter.vercel.app';
+          'https://aaurus-converter.vercel.app/';
       _dio.options.headers['Access-Control-Allow-Methods'] =
           'GET, POST, OPTIONS';
       _dio.options.headers['Access-Control-Allow-Headers'] =
