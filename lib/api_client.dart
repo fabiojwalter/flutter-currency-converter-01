@@ -8,11 +8,12 @@ class ApiClient {
   Future<Map<String, dynamic>>? get({required String url}) async {
     Map<String, dynamic> responseData = <String, dynamic>{};
     try {
-      final Options options = Options(headers: {
-        'Access-Control-Allow-Origin': 'aaurus-converter.vercel.app',
-        // Replace '*' with your desired origin
-      });
-      final Response response = await _dio.get(url, options: options);
+      _dio.options.headers['Access-Control-Allow-Origin'] = '*';
+      _dio.options.headers['Access-Control-Allow-Methods'] =
+          'GET, POST, OPTIONS';
+      _dio.options.headers['Access-Control-Allow-Headers'] =
+          'Origin, Content-Type, Accept';
+      final Response response = await _dio.get(url);
 
       if (response.statusCode == 200) {
         responseData = response.data;
