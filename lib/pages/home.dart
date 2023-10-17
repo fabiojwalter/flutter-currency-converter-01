@@ -113,17 +113,23 @@ class _HomePageState extends State<HomePage> {
               case ConnectionState.none:
               case ConnectionState.waiting:
                 return const Center(
-                    child: Text('Carregando dados',
-                        style: TextStyle(
-                          color: Colors.amber,
-                        )));
+                  child: Text(
+                    'Carregando dados',
+                    style: TextStyle(
+                      color: Colors.amber,
+                    ),
+                  ),
+                );
               default:
                 if (snapshot.hasError) {
                   return const Center(
-                      child: Text('Erro carregando dados',
-                          style: TextStyle(
-                            color: Colors.amber,
-                          )));
+                    child: Text(
+                      'Erro carregando dados',
+                      style: TextStyle(
+                        color: Colors.amber,
+                      ),
+                    ),
+                  );
                 }
                 usd = snapshot.data?['results']['currencies']['USD']['buy'];
                 eur = snapshot.data?['results']['currencies']['EUR']['buy'];
