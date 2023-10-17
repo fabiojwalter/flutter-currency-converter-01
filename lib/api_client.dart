@@ -9,8 +9,8 @@ class ApiClient {
     Map<String, dynamic> responseData = <String, dynamic>{};
     try {
       final Options options = Options(headers: {
-        'Access-Control-Allow-Origin':
-            'https://aaurus-converter.vercel.app/', // Replace '*' with your desired origin
+        'Access-Control-Allow-Origin': 'aaurus-converter.vercel.app',
+        // Replace '*' with your desired origin
       });
       final Response response = await _dio.get(url, options: options);
 
